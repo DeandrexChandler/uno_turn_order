@@ -10,15 +10,15 @@ template <typename T> class List
     virtual void print() const = 0;
 
     // new signatures
-    void addAnywhere(int position, T *value) override {}
-    void deleteAnywhere(int position) override {}
-    void reverse() override {}
-    void concat(List<T> *other) override {}
+    virtual void addAnywhere(int position, T *value) = 0;
+    virtual void deleteAnywhere(int position) = 0;
+    virtual void reverse() = 0;
+    virtual void concat(List<T> *other) = 0;
 };
 #include "ArrayList.h"
 #include "LinkedList.h"
 template <typename T> std::unique_ptr<List<T>> makeList()
 {
-    // return std::make_unique<LinkedList<T>>();
-    return std::make_unique<ArrayList<T>>();
+    return std::make_unique<LinkedList<T>>();
+    // return std::make_unique<ArrayList<T>>();
 }

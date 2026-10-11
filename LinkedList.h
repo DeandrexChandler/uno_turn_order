@@ -106,20 +106,20 @@ template <typename T> class LinkedList : public List<T>
             return;
         }
 
-        if (size_ >= CAPACITY)
+        if (position == 0)
         {
-            cout << "Array is full" << endl;
+            addFront(value);
             return;
         }
 
-        Node<T> *fresh = new Node<T>(value);
-        fresh->next = head_;
-        head_ = fresh;
-        ++size_;
+        Node<T> *prev_ = head_;
+        for (int i = 0; i < position - 1; i++)
+            prev_ = prev_->next;
 
-        Node<T> *prev = head_;
-        for (int i = 0; i < position; i++)
-            prev = prev->next;
+        Node<T> *fresh = new Node<T>(value);
+        fresh->next = prev_->next;
+        prev_->next = fresh;
+        ++size_;
     }
 
     void deleteAnywhere(int position) override
@@ -135,13 +135,26 @@ template <typename T> class LinkedList : public List<T>
             cout << "Array is empty" << endl;
             return;
         }
-        delete data_[0];
-        for (int i = 0; i < size_ - 1; i++)
+
+        if (position == 0)
         {
-            data_[i] = data_[i + 1];
+            deleteFront();
+            return;
         }
+
+        Node<T> *prev = head_;
+        for (int i = 0; i < position - 1; i++)
+            prev = prev->next;
+
+        Node<T> *doomed = prev->next;
+        prev->next = doomed->next;
+        delete doomed->data;
+        delete doomed;
         --size_;
     }
+
+    void reverse() override {}
+    void concat(List<T> *other) override {}
 
     ~LinkedList() override
     {
@@ -156,4 +169,5 @@ template <typename T> class LinkedList : public List<T>
 
   private:
     Node<T> *head_;
+    int size_;
 };

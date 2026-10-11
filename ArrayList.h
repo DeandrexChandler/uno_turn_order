@@ -159,11 +159,11 @@ template <typename T> class ArrayList : public List<T>
             return;
         }
 
-        for (int i = size_; i > 0; i--)
+        for (int i = size_; i > position; i--)
         {
             data_[i] = data_[i - 1];
         }
-        data_[0] = value;
+        data_[position] = value;
         ++size_;
     }
 
@@ -180,13 +180,17 @@ template <typename T> class ArrayList : public List<T>
             cout << "Array is empty" << endl;
             return;
         }
+
         delete data_[position];
-        for (int i = 0; i < size_ - 1; i++)
+        for (int i = position; i < size_ - 1; i++)
         {
             data_[i] = data_[i + 1];
         }
         --size_;
     }
+
+    void reverse() override {}
+    void concat(List<T> *other) override {}
 
   private:
     static const int CAPACITY = 20;
