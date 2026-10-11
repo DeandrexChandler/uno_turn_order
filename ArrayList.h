@@ -145,6 +145,28 @@ template <typename T> class ArrayList : public List<T>
         }
     }
 
+    void addAnywhere(int position, T *value) override
+    {
+        if (position < 0 || position > size_)
+        {
+            cout << "Outside of range" << endl;
+            return;
+        }
+
+        if (size_ >= CAPACITY)
+        {
+            cout << "Array is full" << endl;
+            return;
+        }
+
+        for (int i = size_; i > 0; i--)
+        {
+            data_[i] = data_[i - 1];
+        }
+        data_[0] = value;
+        ++size_;
+    }
+
   private:
     static const int CAPACITY = 20;
     T *data_[CAPACITY];

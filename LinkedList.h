@@ -55,12 +55,13 @@ using namespace std;
 template <typename T> class LinkedList : public List<T>
 {
   public:
-    LinkedList() : head_(nullptr) {}
+    LinkedList() : head_(nullptr), size_(0) {}
     void addFront(T *value) override
     {
         Node<T> *fresh = new Node<T>(value);
         fresh->next = head_;
         head_ = fresh;
+        ++size_;
     }
     void deleteFront() override
     {
@@ -73,6 +74,7 @@ template <typename T> class LinkedList : public List<T>
         head_ = head_->next;
         delete doomed->data;
         delete doomed;
+        --size_;
     }
     bool search(T *value) const override
     {
@@ -95,6 +97,31 @@ template <typename T> class LinkedList : public List<T>
         }
         std::cout << std::endl;
     }
+
+    void addAnywhere(int position, T *value) override
+    {
+        if (position < 0 || position > size_)
+        {
+            cout << "Outside of range" << endl;
+            return;
+        }
+
+        if (size_ >= CAPACITY)
+        {
+            cout << "Array is full" << endl;
+            return;
+        }
+
+        Node<T> *fresh = new Node<T>(value);
+        fresh->next = head_;
+        head_ = fresh;
+        ++size_;
+
+        Node<T> *prev = head_;
+        for (int i=0; i < position; i++)
+            prev = prev->next;
+    }
+
     ~LinkedList() override
     {
         while (head_ != nullptr)

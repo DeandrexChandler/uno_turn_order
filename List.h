@@ -8,6 +8,12 @@ template <typename T> class List
     virtual void deleteFront() = 0;
     virtual bool search(T *value) const = 0;
     virtual void print() const = 0;
+
+    // new signatures
+    void addAnywhere(int position, T *value) override {}
+    void deleteAnywhere(int position) override {}
+    void reverse() override {}
+    void concat(List<T> *other) override {}
 };
 #include "ArrayList.h"
 #include "LinkedList.h"
