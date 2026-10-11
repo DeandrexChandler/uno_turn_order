@@ -118,8 +118,29 @@ template <typename T> class LinkedList : public List<T>
         ++size_;
 
         Node<T> *prev = head_;
-        for (int i=0; i < position; i++)
+        for (int i = 0; i < position; i++)
             prev = prev->next;
+    }
+
+    void deleteAnywhere(int position) override
+    {
+        if (position < 0 || position >= size_)
+        {
+            cout << "Outside of range" << endl;
+            return;
+        }
+
+        if (size_ == 0)
+        {
+            cout << "Array is empty" << endl;
+            return;
+        }
+        delete data_[0];
+        for (int i = 0; i < size_ - 1; i++)
+        {
+            data_[i] = data_[i + 1];
+        }
+        --size_;
     }
 
     ~LinkedList() override

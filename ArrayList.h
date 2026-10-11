@@ -167,6 +167,27 @@ template <typename T> class ArrayList : public List<T>
         ++size_;
     }
 
+    void deleteAnywhere(int position) override
+    {
+        if (position < 0 || position >= size_)
+        {
+            cout << "Outside of range" << endl;
+            return;
+        }
+
+        if (size_ == 0)
+        {
+            cout << "Array is empty" << endl;
+            return;
+        }
+        delete data_[position];
+        for (int i = 0; i < size_ - 1; i++)
+        {
+            data_[i] = data_[i + 1];
+        }
+        --size_;
+    }
+
   private:
     static const int CAPACITY = 20;
     T *data_[CAPACITY];
