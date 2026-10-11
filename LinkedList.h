@@ -112,13 +112,13 @@ template <typename T> class LinkedList : public List<T>
             return;
         }
 
-        Node<T> *prev_ = head_;
+        Node<T> *prev = head_;
         for (int i = 0; i < position - 1; i++)
-            prev_ = prev_->next;
+            prev = prev->next;
 
         Node<T> *fresh = new Node<T>(value);
-        fresh->next = prev_->next;
-        prev_->next = fresh;
+        fresh->next = prev->next;
+        prev->next = fresh;
         ++size_;
     }
 
@@ -153,7 +153,22 @@ template <typename T> class LinkedList : public List<T>
         --size_;
     }
 
-    void reverse() override {}
+    void reverse() override
+    {
+        Node<T> *prev = nullptr;
+        Node<T> *next = head_;
+        Node<T> *current = head_;
+
+        while (current != nullptr)
+        {
+            next = current->next;
+            current->next = prev;
+            prev = current;
+            current = next;
+        }
+        head_ = prev;
+    }
+
     void concat(List<T> *other) override {}
 
     ~LinkedList() override
