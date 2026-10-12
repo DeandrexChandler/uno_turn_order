@@ -1,11 +1,11 @@
-#include <iostream>
 #include "List.h"
 #include "Player.h"
+#include <iostream>
 
-int main() {
+int main()
+{
     // ---- Part 1: required test harness, do not modify ----
-    std::cout << "== List<int>: addAnywhere / deleteAnywhere / reverse =="
-              << std::endl;
+    std::cout << "== List<int>: addAnywhere / deleteAnywhere / reverse ==" << std::endl;
     std::unique_ptr<List<int>> nums = makeList<int>();
     nums->addFront(new int(10));
     nums->addFront(new int(20));
@@ -28,7 +28,35 @@ int main() {
     more->print();
 
     // ---- Part 2: your Uno scene goes below ----
+    std::unique_ptr<List<Player>> players = makeList<Player>();
+    players->addFront(new Player(1, "Ben"));
+    players->addFront(new Player(2, "Deandre"));
+    players->addFront(new Player(3, "Benny"));
+    std::cout << "3 players enter table 1, and plays a couple cards:" << std::endl;
+    players->print();
 
+    std::cout << "\nThen a new player Benyamin, enters the game:" << std::endl;
+    players->addAnywhere(1, new Player(4, "Benyamin"));
+    players->print();
 
+    std::cout << "\nSomeone plays a reverse card:" << std::endl;
+    players->reverse();
+    players->print();
+
+    std::cout << "\nThen I, Deandre (the greatest uno player ever) wins and leaves the table:"
+              << std::endl;
+    players->deleteAnywhere(2);
+    players->print();
+
+    std::cout << "\nThen a new table is formed with 2 new players:" << std::endl;
+    std::unique_ptr<List<Player>> newTable = makeList<Player>();
+    newTable->addFront(new Player(5, "Benjamin"));
+    newTable->addFront(new Player(6, "Ben2"));
+    newTable->print();
+
+    std::cout << "\nBoth tables end their game and combine into one table:" << std::endl;
+    players->concat(newTable.get());
+    players->print();
+    newTable->print();
     return 0;
 }
