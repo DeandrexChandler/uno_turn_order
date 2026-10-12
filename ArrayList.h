@@ -204,7 +204,29 @@ template <typename T> class ArrayList : public List<T>
         }
     }
 
-    void concat(List<T> *other) override {}
+    void concat(List<T> *other) override
+    {
+        ArrayList<T> *otherList = dynamic_cast<ArrayList<T> *>(other);
+
+        if (otherList == nullptr)
+        {
+            cout << "Incorrect list type" << endl;
+            return;
+        }
+
+        if (size_ + otherList->size_ > CAPACITY)
+        {
+            cout << "Not enough capacity" << endl;
+            return;
+        }
+
+        for (int i = 0; i < otherList->size_; ++i)
+        {
+            data_[size_ + i] = otherList->data_[i];
+        }
+        size_ += otherList->size_;
+        otherList->size_ = 0;
+    }
 
   private:
     static const int CAPACITY = 20;
