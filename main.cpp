@@ -45,7 +45,7 @@ int main()
 
     std::cout << "\nThen I, Deandre (the greatest uno player ever) wins and leaves the table:"
               << std::endl;
-    players->deleteAnywhere(2);
+    players->deleteAnywhere(1);
     players->print();
 
     std::cout << "\nThen a new table is formed with 2 new players:" << std::endl;
